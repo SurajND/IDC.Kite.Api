@@ -1,0 +1,17 @@
+C:\Project\IDC.Kite\IDC.Kite.Classes\bin\Debug\netcoreapp2.2\IDC.Kite.Classes.deps.json
+C:\Project\IDC.Kite\IDC.Kite.Classes\bin\Debug\netcoreapp2.2\IDC.Kite.Classes.dll
+C:\Project\IDC.Kite\IDC.Kite.Classes\bin\Debug\netcoreapp2.2\IDC.Kite.Classes.pdb
+C:\Project\IDC.Kite\IDC.Kite.Classes\obj\Debug\netcoreapp2.2\IDC.Kite.Classes.csproj.CoreCompileInputs.cache
+C:\Project\IDC.Kite\IDC.Kite.Classes\obj\Debug\netcoreapp2.2\IDC.Kite.Classes.AssemblyInfoInputs.cache
+C:\Project\IDC.Kite\IDC.Kite.Classes\obj\Debug\netcoreapp2.2\IDC.Kite.Classes.AssemblyInfo.cs
+C:\Project\IDC.Kite\IDC.Kite.Classes\obj\Debug\netcoreapp2.2\IDC.Kite.Classes.dll
+C:\Project\IDC.Kite\IDC.Kite.Classes\obj\Debug\netcoreapp2.2\IDC.Kite.Classes.pdb
+C:\Users\rkatiyar\Desktop\KITE-doc\IDC.Kite\IDC.Kite.Classes\bin\Debug\netcoreapp2.2\IDC.Kite.Classes.deps.json
+C:\Users\rkatiyar\Desktop\KITE-doc\IDC.Kite\IDC.Kite.Classes\bin\Debug\netcoreapp2.2\IDC.Kite.Classes.dll
+C:\Users\rkatiyar\Desktop\KITE-doc\IDC.Kite\IDC.Kite.Classes\bin\Debug\netcoreapp2.2\IDC.Kite.Classes.pdb
+C:\Users\rkatiyar\Desktop\KITE-doc\IDC.Kite\IDC.Kite.Classes\obj\Debug\netcoreapp2.2\IDC.Kite.Classes.csproj.CoreCompileInputs.cache
+C:\Users\rkatiyar\Desktop\KITE-doc\IDC.Kite\IDC.Kite.Classes\obj\Debug\netcoreapp2.2\IDC.Kite.Classes.AssemblyInfoInputs.cache
+C:\Users\rkatiyar\Desktop\KITE-doc\IDC.Kite\IDC.Kite.Classes\obj\Debug\netcoreapp2.2\IDC.Kite.Classes.AssemblyInfo.cs
+C:\Users\rkatiyar\Desktop\KITE-doc\IDC.Kite\IDC.Kite.Classes\obj\Debug\netcoreapp2.2\IDC.Kite.Classes.dll
+C:\Users\rkatiyar\Desktop\KITE-doc\IDC.Kite\IDC.Kite.Classes\obj\Debug\netcoreapp2.2\IDC.Kite.Classes.pdb
+C:\Project\IDC.Kite\IDC.Kite.Classes\obj\Debug\netcoreapp2.2\IDC.Kite.Classes.csprojAssemblyReference.cache
