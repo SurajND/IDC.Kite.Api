@@ -1,0 +1,38 @@
+###############################################################################
+# Set default behavior to automatically normalize line endings.
+###############################################################################
+* text=auto
+
+###############################################################################
+# These files are text and should be normalized (convert crlf > lf)
+###############################################################################
+*.cs      text diff=csharp
+*.java    text diff=java
+*.html    text diff=html
+*.xaml    text
+*.css     text
+*.js      text
+*.sql     text
+*.tt      text
+*.ps1     text
+*.cmd     text
+*.msbuild text
+*.md      text
+*.config  text
+*.csproj  text
+*.sln     text
+
+*.doc    diff=astextplain
+*.docx   diff=astextplain
+*.DOCX   diff=astextplain
+
+*.webtest  text
+*.loadtest text
+*.testsettings text
+
+###############################################################################
+# Image files should be treated as binary.
+###############################################################################
+*.jpg   binary
+*.png   binary
+*.gif   binary
