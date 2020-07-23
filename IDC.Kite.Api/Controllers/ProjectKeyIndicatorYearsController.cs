@@ -74,6 +74,76 @@ namespace IDC.Kite.Api.Controllers
             return NoContent();
         }
 
+        // GET: api/ProjectKeyIndicatorByAllOpco
+        [Route("ProjectKeyIndicatorByAllOpco")]
+        public async Task<ActionResult> ProjectKeyIndicatorByAllOpco()
+        {
+            var indicatorsByOpco = await _context.OperationalCompanies.Select(v => new
+            {
+                opco = v.Id,
+                value = _context.ProjectKeyIndicatorYears.Include(y => y.Project)
+                    .Where(p => p.Project.OperationalCompanyId == v.Id).GroupBy(x => x.KeyIndicator).ToList()
+            }).ToListAsync();
+
+            return Ok(indicatorsByOpco);
+        }
+
+        //
+        // GET: api/ProjectKeyIndicatorByAllOpcoForAYear
+        [HttpGet("ProjectKeyIndicatorByAllOpcoForAYear")]
+        public async Task<ActionResult> ProjectKeyIndicatorByAllOpcoForAYear([FromQuery] int year)
+        {
+            var indicatorsByOpco = await _context.OperationalCompanies.Select(v => new
+            {
+                opco = v.Id,
+                OperationalCompanyName = v.OperationalCompanyName,
+                value = _context.ProjectKeyIndicatorYears.Include(y => y.Project)
+                    .Where(p => p.Project.OperationalCompanyId == v.Id && p.Year == year)
+                    .GroupBy(x => x.KeyIndicator)
+                    .Select(x => new { keyIndicatorName = x.Key.Indicator, value = x.Average(y => y.Value), keyIndicatorId = x.Key.Id })
+                    .ToList()
+            }).ToListAsync();
+
+            return Ok(indicatorsByOpco);
+        }
+
+        // GET: api/ProjectKeyIndicatorForAnOpco
+        [Route("ProjectKeyIndicatorForAnOpco")]
+        [HttpGet]
+        public async Task<ActionResult> ProjectKeyIndicatorForAnOpco([FromQuery] Guid opco)
+        {
+            var opcoIndicator = new
+            {
+                opco,
+                value = await _context.ProjectKeyIndicatorYears.Include(y => y.Project)
+                    .Where(p => p.Project.OperationalCompanyId == opco)
+                    .GroupBy(x => x.KeyIndicator)
+                    .Select(x => new { keyIndicatorId = x.Key.Id, keyIndicatorName = x.Key.Indicator, value = x.Average(y => y.Value) })
+                    .ToListAsync()
+            };
+
+            return Ok(opcoIndicator);
+        }
+
+        //
+        // GET: api/ProjectKeyIndicatorForAnOpcoForAYear
+        [Route("ProjectKeyIndicatorForAnOpcoForAYear")]
+        [HttpGet]
+        public async Task<ActionResult> ProjectKeyIndicatorForAnOpcoForAYear([FromQuery] Guid opco, [FromQuery] int year)
+        {
+            var opcoIndicator = new
+            {
+                opco,
+                value = await _context.ProjectKeyIndicatorYears.Include(y => y.Project)
+                    .Where(p => p.Project.OperationalCompanyId == opco && p.Year == year)
+                    .GroupBy(x => x.KeyIndicator)
+                    .Select(x => new { keyIndicatorId = x.Key.Id, keyIndicatorName = x.Key.Indicator, value = x.Average(y => y.Value) })
+                    .ToListAsync()
+            };
+
+            return Ok(opcoIndicator);
+        }
+
         // POST: api/ProjectKeyIndicatorYears
         [HttpPost]
         public async Task<ActionResult<ProjectKeyIndicatorYear>> PostProjectKeyIndicatorYear(ProjectKeyIndicatorYear projectKeyIndicatorYear)
