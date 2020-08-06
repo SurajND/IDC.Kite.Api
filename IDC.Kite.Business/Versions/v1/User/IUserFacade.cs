@@ -12,5 +12,7 @@ namespace IDC.Kite.Business.Versions.v1.User
         Task<UserDto> Post(UserDto user);
         Task<UserDto> Authenticate(string username, string password);
         Task<UserDto> GetById(Guid id);
+        Task<UserDto> PatchTask(UserDto user);
+        Task<bool> ResetPassword(Guid id, string oldPassword, string newPassword);
     }
 }

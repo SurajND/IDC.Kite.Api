@@ -59,49 +59,35 @@ namespace IDC.Kite.Api.Controllers
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(Guid id)
+        public async Task<ActionResult<UserDto>> GetUser(Guid id)
         {
-            var user = _context.Users.
-                Include(x => x.Role).Include(x => x.Project)
-                .Include(x => x.OperationalCompany)
-                .FirstOrDefault(x=>x.Id==id);
-
-            if (user == null) return NotFound();
-            user.Password = null;
-            user.Token = null;
+            var user = await _facade.GetById(id);
 
             return user;
-
         }
 
         // PUT: api/Users/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(Guid id, User user)
+        public async Task<IActionResult> PutUser(Guid id, UserDto user)
         {
             if (id != user.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            user.Id = id;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            var userDto = await _facade.PatchTask(user);
 
             return NoContent();
+        }
+
+        // PUT: api/Users/5
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> ResetPassword(Guid id, [FromQuery] string oldPassword, [FromQuery] string newPassword)
+        {
+            var success = await _facade.ResetPassword(id, oldPassword, newPassword);
+            return Ok(success);
         }
 
         // POST: api/Users
@@ -135,11 +121,6 @@ namespace IDC.Kite.Api.Controllers
             await _context.SaveChangesAsync();
 
             return user;
-        }
-
-        private bool UserExists(Guid id)
-        {
-            return _context.Users.Any(e => e.Id == id);
         }
     }
 }

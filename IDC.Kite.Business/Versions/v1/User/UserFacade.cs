@@ -38,10 +38,48 @@ namespace IDC.Kite.Business.Versions.v1.User
         public async Task<UserDto> Post(UserDto user)
         {
             var userData = _mapper.Map<UserDto, Classes.Entity.User>(user);
+            // to be removed
+            userData.Password = "Welcome123";
             _context.Users.Add(userData);
             await _context.SaveChangesAsync();
 
             return user;
+        }
+
+        public async Task<UserDto> PatchTask(UserDto user)
+        {
+            var sqlUser = await _context.Users.SingleOrDefaultAsync(x => x.Id == user.Id);
+
+            var userSql = _mapper.Map(user, sqlUser);
+
+            _context.Entry(userSql).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                return user;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.Users.Any(e => e.Id == user.Id))
+                {
+                    return null;
+                }
+
+                throw;
+            }
+        }
+
+        public async Task<bool> ResetPassword(Guid id, string oldPassword, string newPassword)
+        {
+            var sqlUser = await _context.Users.SingleOrDefaultAsync(x => x.Id == id);
+            if (sqlUser == null) return false;
+
+            if (!sqlUser.Password.Equals(oldPassword)) return false;
+            sqlUser.Password = newPassword;
+            _context.Entry(sqlUser).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         public async Task<UserDto> Authenticate(string username, string password)
@@ -85,14 +123,12 @@ namespace IDC.Kite.Business.Versions.v1.User
 
         public async Task<UserDto> GetById(Guid id)
         {
-            var user = _context.Users.FirstOrDefault(x => x.Id == id);
+            var user = _context.Users.
+                Include(x => x.Role).Include(x => x.Project)
+                .Include(x => x.OperationalCompany)
+                .FirstOrDefault(x => x.Id == id);
 
-            // return user without password
-            if (user != null)
-                user.Password = null;
-
-            var userDto = _mapper.Map<Classes.Entity.User, UserDto>(user);
-            return userDto;
+            return _mapper.Map<Classes.Entity.User, UserDto>(user);
         }
     }
 }
